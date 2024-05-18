@@ -5,7 +5,7 @@
 SIM ?= icarus
 TOPLEVEL_LANG ?= verilog
 SRC_DIR = $(PWD)/../src
-PROJECT_SOURCES = project.v
+PROJECT_SOURCES = tt_um_vga_perlin.v vga_perlin.v VgaSyncGen.v perlin_noise_generator.v
 
 ifneq ($(GATES),yes)
 

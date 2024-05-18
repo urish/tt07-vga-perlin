@@ -5,7 +5,7 @@
 
 `default_nettype none
 
-module tt_um_example (
+module tt_um_vga_perlin (
     input  wire [7:0] ui_in,    // Dedicated inputs
     output wire [7:0] uo_out,   // Dedicated outputs
     input  wire [7:0] uio_in,   // IOs: Input path
@@ -17,8 +17,32 @@ module tt_um_example (
 );
 
   // All output pins must be assigned. If not used, assign to 0.
-  assign uo_out  = ui_in + uio_in;  // Example: ou_out is the sum of ui_in and uio_in
   assign uio_out = 0;
   assign uio_oe  = 0;
+
+  assign uio_out = 8'b0;
+  assign uio_oe  = 8'b0;
+
+  wire [1:0] R;
+  wire [1:0] G;
+  wire [1:0] B;
+  wire hsync, vsync;
+
+  assign uo_out[0] = R[1];
+  assign uo_out[1] = G[1];
+  assign uo_out[2] = B[1];
+  assign uo_out[3] = vsync;
+  assign uo_out[4] = R[0];
+  assign uo_out[5] = G[0];
+  assign uo_out[6] = B[0];
+  assign uo_out[7] = hsync;
+
+  vga_perlin vga_perlin (
+      .clk   (clk),
+      .rst_n (rst_n),
+      .hsync (hsync),
+      .vsync (vsync),
+      .rrggbb({R, G, B})
+  );
 
 endmodule
