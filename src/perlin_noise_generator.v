@@ -7,7 +7,7 @@ module perlin_noise_generator (
     input wire clk,
     input wire [9:0] x,
     input wire [9:0] y,
-    input wire [15:0] t,
+    input wire [19:0] t,
     output reg [7:0] noise
 );
 
@@ -299,7 +299,7 @@ module perlin_noise_generator (
   always @(posedge clk) begin
     xi <= x[9:2];
     yi <= y[9:2];
-    zi <= t[15:8];
+    zi <= t[19:12];
 
     u <= fade(x);
     v <= fade(y);
@@ -314,10 +314,10 @@ module perlin_noise_generator (
     noise <= lerp(
         v,
         lerp(
-            u, grad(perm[aa], x, y, t), grad(perm[ba], x - 256, y, t)
+            u, grad(perm[aa], x, y, t[11:2]), grad(perm[ba], x - 256, y, t[11:2])
         ),
         lerp(
-            u, grad(perm[ab], x, y - 256, t), grad(perm[bb], x - 256, y - 256, t)
+            u, grad(perm[ab], x, y - 256, t[11:2]), grad(perm[bb], x - 256, y - 256, t[11:2])
         )
     );
   end

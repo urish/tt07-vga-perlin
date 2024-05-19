@@ -28,13 +28,13 @@ module vga_perlin (
   );
 
   reg  [ 9:0] prev_y;
-  reg  [15:0] counter;
+  reg  [19:0] counter;
   wire [ 7:0] noise_value;
 
   perlin_noise_generator perlin_inst (
       .clk(clk),
-      .x({x_px[9:2], 2'b00}),
-      .y({y_px[9:2], 2'b00}),
+      .x({x_px[9:2], 2'b0}),
+      .y({y_px[9:2], 2'b0}),
       .t(counter),
       .noise(noise_value)
   );
@@ -43,7 +43,7 @@ module vga_perlin (
 
   always @(posedge clk) begin
     if (reset) begin
-      counter <= 16'b0;
+      counter <= 20'b0;
       prev_y  <= 10'b0;
     end else begin
       prev_y <= y_px;
