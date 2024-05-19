@@ -1,3 +1,5 @@
+/* verilator lint_off WIDTH */
+
 `default_nettype none
 
 // Created with ChatGPT's help
