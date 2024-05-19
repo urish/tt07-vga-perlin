@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2024 Uri Shaked
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 `default_nettype none
 
 module vga_perlin (

@@ -1,8 +1,12 @@
-/* verilator lint_off WIDTH */
+// SPDX-License-Identifier: Apache-2.0
 
 `default_nettype none
 
-// Created with ChatGPT's help
+// Created with Tiny Tapeout AI Assist GPT help: 
+// https://chatgpt.com/g/g-NDGYkKtDy-tiny-tapeout-ai-assist
+
+/* verilator lint_off WIDTH */
+
 module perlin_noise_generator (
     input wire clk,
     input wire [9:0] x,

@@ -9,7 +9,7 @@ You can also include images in this folder and reference them in the markdown. E
 
 ## How it works
 
-Generates a pattern on the screen.
+Generates an animated [perlin noise](https://en.wikipedia.org/wiki/Perlin_noise) pattern on the screen. The perlin noise code was created with the help of the [Tiny Tapeout AI Assist GPT](https://chatgpt.com/g/g-NDGYkKtDy-tiny-tapeout-ai-assist).
 
 ## How to test
 
