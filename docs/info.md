@@ -13,7 +13,7 @@ Generates an animated [perlin noise](https://en.wikipedia.org/wiki/Perlin_noise)
 
 ## How to test
 
-Connect to a VGA monitor.
+Connect to a VGA monitor. Change pattern_sel (ui_in[0]) to choose between two different patterns.
 
 ## External hardware
 

@@ -8,6 +8,7 @@
 module vga_perlin (
     input wire clk,
     input wire rst_n,
+    input wire pattern_sel,
     output wire hsync,
     output wire vsync,
     output wire [5:0] rrggbb
@@ -44,7 +45,11 @@ module vga_perlin (
       .noise(noise_value)
   );
 
-  assign rrggbb = activevideo ? noise_value[7:2] : 6'b0;
+  
+  wire [5:0] pattern1 = {noise_value[7], noise_value[2], noise_value[6], noise_value[3], noise_value[5], noise_value[4]};
+  wire [5:0] pattern2 = noise_value[7:2];
+
+  assign rrggbb = activevideo ? (pattern_sel ? pattern2 : pattern1) : 6'b0;
 
   always @(posedge clk) begin
     if (reset) begin

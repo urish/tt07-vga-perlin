@@ -40,6 +40,7 @@ module tt_um_vga_perlin (
   vga_perlin vga_perlin (
       .clk   (clk),
       .rst_n (rst_n),
+      .pattern_sel(ui_in[0]),
       .hsync (hsync),
       .vsync (vsync),
       .rrggbb({R, G, B})
