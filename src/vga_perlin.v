@@ -27,14 +27,29 @@ module vga_perlin (
       .reset(reset)
   );
 
-  wire [7:0] noise_value;
+  reg  [ 9:0] prev_y;
+  reg  [15:0] counter;
+  wire [ 7:0] noise_value;
 
   perlin_noise_generator perlin_inst (
       .clk(clk),
       .x({x_px[9:2], 2'b00}),
       .y({y_px[9:2], 2'b00}),
+      .t(counter),
       .noise(noise_value)
   );
 
   assign rrggbb = activevideo ? noise_value[7:2] : 6'b0;
+
+  always @(posedge clk) begin
+    if (reset) begin
+      counter <= 16'b0;
+      prev_y  <= 10'b0;
+    end else begin
+      prev_y <= y_px;
+      if (prev_y != y_px && y_px == 0) begin
+        counter <= counter + 1;
+      end
+    end
+  end
 endmodule

@@ -7,6 +7,7 @@ module perlin_noise_generator (
     input wire clk,
     input wire [9:0] x,
     input wire [9:0] y,
+    input wire [15:0] t,
     output reg [7:0] noise
 );
 
@@ -282,41 +283,41 @@ module perlin_noise_generator (
   endfunction
 
   // Gradient function
-  function [9:0] grad(input [7:0] hash, input [9:0] x, input [9:0] y);
+  function [9:0] grad(input [7:0] hash, input [9:0] x, input [9:0] y, input [9:0] t);
     case (hash & 3)
-      0: grad = x + y;
-      1: grad = -x + y;
-      2: grad = x - y;
-      3: grad = -x - y;
+      0: grad = x + y + t;
+      1: grad = -x + y + t;
+      2: grad = x - y + t;
+      3: grad = -x - y + t;
       default: grad = 0;
     endcase
   endfunction
 
-
   reg [9:0] u, v, a, aa, ab, b, ba, bb;
-  reg [7:0] xi, yi;
+  reg [7:0] xi, yi, zi;
 
   always @(posedge clk) begin
     xi <= x[9:2];
     yi <= y[9:2];
+    zi <= t[15:8];
 
     u <= fade(x);
     v <= fade(y);
 
     a <= perm[xi] + yi;
-    aa <= perm[a];
-    ab <= perm[a+1];
+    aa <= perm[a] + zi;
+    ab <= perm[a+1] + zi;
     b <= perm[xi+1] + yi;
-    ba <= perm[b];
-    bb <= perm[b+1];
+    ba <= perm[b] + zi;
+    bb <= perm[b+1] + zi;
 
     noise <= lerp(
         v,
         lerp(
-            u, grad(perm[aa], x, y), grad(perm[ba], x - 256, y)
+            u, grad(perm[aa], x, y, t), grad(perm[ba], x - 256, y, t)
         ),
         lerp(
-            u, grad(perm[ab], x, y - 256), grad(perm[bb], x - 256, y - 256)
+            u, grad(perm[ab], x, y - 256, t), grad(perm[bb], x - 256, y - 256, t)
         )
     );
   end
